@@ -44,4 +44,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function empleado (){
+
+        return $this->hasMany('App\Models\Employee');
+
+    }
+
+    public function detalle_orden (){
+
+
+        return $this->hasMany('App\Models\Detail');
+
+
+    }
+
 }

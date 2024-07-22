@@ -197,7 +197,7 @@
 
                     <div class="row col-12 p-4">
                         
-                        <form action="{{route('create_admin')}}" method="POST" class="col-4 p-2 " >
+                        {{-- <form action="{{route('create_admin')}}" method="POST" class="col-4 p-2 " >
                             @csrf
                          <div class="alert alert-success">Registro de administradores </div>
 
@@ -226,7 +226,7 @@
 
                               <button class="btn btn-success ">Agregar administrador</button>
         
-                        </form>
+                        </form> --}}
                         
                         <table class="table table-striped table-bordered table-hover col p-4 ">
                           

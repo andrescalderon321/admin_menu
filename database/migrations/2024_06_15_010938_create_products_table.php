@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('precio');
             $table->text('descripcion');
-            $table->boolean('disponibilidad')->default(true);
+            $table->string('disponibilidad');
             $table->timestamps();
         });
     }

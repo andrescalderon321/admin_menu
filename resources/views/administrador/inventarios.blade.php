@@ -178,9 +178,174 @@
                             </div>
                         </div>
                     </nav>
-                <div class="text-center">
-                    <h1>pagina inventarios </h1>
+                {{-- crud de inventarios  --}}
+
+                <h1 class="text-center alert alert-primary">Inventarios</h1>
+
+                @if(session("correcto"))
+                <div class="alert alert-success">{{session("correcto")}}</div>
+                @endif
+
+                @if(session("incorrecto"))
+                <div class="alert alert-danger">{{session("incorrecto")}}</div>
+                @endif
+
+
+                <div class="row col-12 p-4">
+                    
+                    <form action="{{route('create_inv')}}" method="POST" class="col-3 p-2 " >
+                        @csrf
+                     <div class="alert alert-success">Registro de productos </div>
+
+    
+                        <div class="mb-3">
+                            <label class="form-label">Nombre producto</label>
+                            <input type="text" class="form-control" name="producto_nombre">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Cantidad disponible</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" name="cantidad">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" name="descripcion">
+                        </div>
+                
+    
+                          <div class="mb-3">
+                            <label class="form-label">Precio de compra</label>
+                            <input type="text" class="form-control" name="compra">
+                          </div>
+
+                          <div class="mb-3">
+                            <label class="form-label">Precio de venta</label>
+                            <input type="text" class="form-control" name="venta">
+                          </div>
+
+                          
+
+                          <div class="mb-3">
+                            <label class="form-label">Existencia</label>
+                            <input type="text" class="form-control" name="existencia">
+                          </div>
+
+                          <button class="btn btn-success ">Agregar al inventario</button>
+    
+                    </form>
+                    
+                    <table class="table table-striped table-bordered table-hover col p-4 ">
+                      
+                        <thead class="bg-ingo text-white ">
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre producto</th>
+                            <th scope="col">Cantidad disponible</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Precio de compra</th>
+                            <th scope="col">Precio de venta</th>
+                            <th scope="col">Existencia</th>
+                            <th></th>
+                            
+                           
+                            
+                          </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            @foreach ($inventarios as $item)
+                            <tr>
+                                <th>{{$item->id}}</th>
+                                <td>{{$item->nombre_producto}}</td>
+                                <td>{{$item->cantidad_disponible}}</td>
+                                <td>{{$item->descripcion}}</td>
+                                <td>{{$item->precio_compra}}</td>
+                                <td>{{$item->precio_venta}}</td>
+                                <td>{{$item->existencia}}</td>
+
+                                <td><a  href="" data-bs-toggle="modal" data-bs-target="#modalEditar{{$item->id}}" class="btn btn-warning btn-sm"> <i class="bi bi-pencil-square"></i></a></td>
+                                <td><a  href="{{route("delete_inv",$item->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
+
+                                        <!-- Button trigger modal -->
+
+                                        <!-- Modal de modificar datos  -->
+                        <div class="modal fade" id="modalEditar{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar datos</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{route('update_inv')}}" method="POST">
+                                                @csrf
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Id</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id" value="{{$item->id}}">
+                                            </div> 
+
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Nombre del producto</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="producto_nombre" value="{{$item->nombre_producto}}">
+                                            </div> 
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Cantidad disponible</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="cantidad" value="{{$item->cantidad_disponible}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Descripcion</label>
+                                                <input type="text" class="form-control p-2" id="exampleInputPassword1" name="descripcion"value="{{$item->descripcion}}">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Precio compra</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="compra"value="{{$item->precio_compra}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Precio de venta</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="venta"value="{{$item->precio_venta}}">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Exixtencia</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="existencia"value="{{$item->existencia}}">
+                                            </div>
+    
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Modificar</button>
+                                            </div>
+            
+                                        </form>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                                
+                            </tr>
+                             
+                            @endforeach
+                         
+                        </tbody>
+                    </table>
+
                 </div>
+          
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript"src="{{asset('js/script.js')}}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+
             </div>
 
         </div>

@@ -177,8 +177,8 @@
                             </div>
                         </div>
                     </nav>
-                    {{-- crud de inventario --}}
-                    <h1 class="text-center alert alert-primary">Inventario  </h1>
+                    {{-- crud de provedor --}}
+                    <h1 class="text-center alert alert-primary">Provedores</h1>
 
                     @if(session("correcto"))
                     <div class="alert alert-success">{{session("correcto")}}</div>
@@ -190,32 +190,37 @@
 
                     <div class="row col-12 p-4">
                         
-                        <form action="{{route('create_menu')}}" method="POST" class="col-4 p-2 " >
+                        <form action="{{route('create_sup')}}" method="POST" class="col-4 p-2 " >
                             @csrf
-                         <div class="alert alert-success">Ingreso de nuevos productos</div>
+                         <div class="alert alert-success">Registro de proveedores</div>
 
         
                             <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" name="nombre">
-                              </div>
+                                <label class="form-label">Nombre de la empresa </label>
+                                <input type="text" class="form-control" name="nombre_empresa">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Nombre del proveedor</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="nombre_provedor">
+                            </div>
         
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Precio</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="precio">
-                              </div>
+                                <label for="exampleFormControlInput1" class="form-label">Nombre del producto</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="nombre_producto">
+                            </div>
                             
                               <div class="mb-3">
-                                <label class="form-label">Descripcion</label>
-                                <input type="text" class="form-control" name="descripcion">
+                                <label class="form-label">correo</label>
+                                <input type="email" class="form-control"  placeholder="name@example.com" name="correo">
                               </div>
         
                               <div class="mb-3">
-                                <label class="form-label">Disponibilidad</label>
-                                <input type="tel" class="form-control" name="disponibilidad">
+                                <label class="form-label">Telefono</label>
+                                <input type="tel" class="form-control" name="telefono">
                               </div>
 
-                              <button class="btn btn-success ">Agregar producto</button>
+                              <button class="btn btn-success ">Agregar proveedor</button>
         
                         </form>
                         
@@ -224,26 +229,28 @@
                             <thead class="bg-ingo text-white ">
                               <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Disponibilidad</th>
+                                <th scope="col">Nombre de la empresa</th>
+                                <th scope="col">Nombre de el proveedor</th>
+                                <th scope="col">Nombre de el producto </th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Telefono</th>
                                 <th></th>
                                
                                 
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                @foreach ($menu as $item)
+                                @foreach ($proveedor as $item)
                                 
                                 <tr>
                                     <th>{{$item->id}}</th>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->precio}}</td>
-                                    <td>{{$item->descripcion}}</td>
-                                    <td>{{$item->disponibilidad}}</td>
+                                    <td>{{$item->nombre_de_la_empresa}}</td>
+                                    <td>{{$item->nombre_del_proveedor}}</td>
+                                    <td>{{$item->nombre_producto}}</td>
+                                    <td>{{$item->correo}}</td>
+                                    <td>{{$item->telefono}}</td>
                                     <td><a  href="" data-bs-toggle="modal" data-bs-target="#modalEditar{{$item->id}}" class="btn btn-warning btn-sm"> <i class="bi bi-pencil-square"></i></a></td>
-                                    <td><a  href="{{route("delete_menu",$item->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
+                                    <td><a  href="{{route("delete_sup",$item->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
 
                                             <!-- Button trigger modal -->
   
@@ -256,7 +263,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('update_menu')}}" method="POST">
+                                            <form action="{{route('update_sup')}}" method="POST">
                                                     @csrf
                                                 <div class="mb-3">
                                                 <label for="exampleInputEmail1" class="form-label">Id</label>
@@ -264,20 +271,23 @@
                                                 </div> 
 
                                                 <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                                <label for="exampleInputEmail1" class="form-label">Nombre de la empresa </label>
                                                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombre" value="{{$item->name}}">
                                                 </div> 
                                                 <div class="mb-3">
-                                                <label for="exampleInputPassword1" class="form-label">Precio</label>
+                                                <label for="exampleInputPassword1" class="form-label">Nombre del provedor</label>
                                                 <input type="text" class="form-control" id="exampleInputPassword1" name="precio" value="{{$item->precio}}">
                                                 </div>
                                                 <div class="mb-3">
-                                                <label for="exampleInputPassword1" class="form-label">Descripcion</label>
+                                                <label for="exampleInputPassword1" class="form-label">Nombre del producto</label>
                                                 <input type="text" class="form-control p-2" id="exampleInputPassword1" name="descripcion"value="{{$item->descripcion}}">
                                                 </div>
                                                 <div class="mb-3">
-                                                <label for="exampleInputPassword1" class="form-label">Disponibilidad</label>
+                                                <label for="exampleInputPassword1" class="form-label">Correo</label>
                                                 <input type="text" class="form-control" id="exampleInputPassword1" name="disponibilidad"value="{{$item->disponibilidad}}">
+                                                </div>
+                                                <label for="exampleInputPassword1" class="form-label">Telefono</label>
+                                                <input type="tel" class="form-control" id="exampleInputPassword1" name="disponibilidad"value="{{$item->disponibilidad}}">
                                                 </div>
 
                                                 <div class="modal-footer">

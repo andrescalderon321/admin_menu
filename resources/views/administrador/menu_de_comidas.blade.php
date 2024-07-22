@@ -204,7 +204,7 @@
         
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Precio</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="precio">
+                                <input type="number" class="form-control" name="precio">
                               </div>
                             
                               <div class="mb-3">
@@ -214,10 +214,11 @@
         
                               <div class="mb-3">
                                 <label class="form-label">Disponibilidad</label>
-                                <input type="tel" class="form-control" name="disponibilidad">
+                                <input type="text" class="form-control" name="disponibilidad">
                               </div>
 
-                              <button class="btn btn-success ">Agregar producto</button>
+                              <button class="btn btn-suc
+                              cess ">Agregar producto</button>
         
                         </form>
                         

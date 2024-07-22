@@ -181,6 +181,7 @@
                             </div>
                         </div>
                     </nav>
+                    {{-- crud de empleados --}}
 
                     <h1 class="text-center alert alert-primary">Empleados  </h1>
 
@@ -233,6 +234,7 @@
                                 <th scope="col">Rol</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Telefono</th>
+                                <th></th>
                                 <th></th>
                                
                                 
