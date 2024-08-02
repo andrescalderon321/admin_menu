@@ -34,6 +34,15 @@
                             <img src="img/logofinal.png"
                               style="width: 185px;" alt="logo">
                             <h4 class="mt-1 mb-5 pb-1"> Iniciar Sesion </h4>
+                            
+                            @if(session("correcto"))
+                            <div class="alert alert-success">{{session("correcto")}}</div>
+                            @endif
+        
+                            @if(session("incorrecto"))
+                            <div class="alert alert-danger">{{session("incorrecto")}}</div>
+                            @endif
+        
                           </div>
           
                           <form action="{{route('login')}}" method="POST"> 
