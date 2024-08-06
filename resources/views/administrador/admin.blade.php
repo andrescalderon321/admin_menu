@@ -84,7 +84,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{route('pedidos')}}" class="sidebar-link">
+                    <a href="{{route('ordenes')}}" class="sidebar-link">
                         <i class="fi fi-sr-bell-ring"></i>
                         <span>Pedidos</span>
                     </a>
@@ -99,9 +99,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="Base_de_datos.html" class="sidebar-link">
+                    <a href="{{route('mesas')}}" class="sidebar-link">
                         <i class="fi fi-sr-database"></i>
-                        <span>Base de datos</span>
+                        <span>Mesas</span>
                     </a>
 
                 </li>
@@ -182,8 +182,19 @@
                         </div>
                     </nav>
 
-                    <h1 class="text-center alert alert-primary">Administradores </h1>
+                    
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                        }
+                    </style>
 
+
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Administradores</h1>
+                    
+
+                  
                     {{-- mensajes de correcto u incorrecto a la hora de ingresar un nuevo dato o actualizarlo o eliminarlo --}}
 
                     @if(session("correcto"))
@@ -197,37 +208,7 @@
 
                     <div class="row col-12 p-4">
                         
-                        {{-- <form action="{{route('create_admin')}}" method="POST" class="col-4 p-2 " >
-                            @csrf
-                         <div class="alert alert-success">Registro de administradores </div>
-
-        
-                            <div class="mb-3">
-                                <label class="form-label">Usuario</label>
-                                <input type="text" class="form-control" name="nombre">
-                              </div>
-        
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
-                              </div>
-                            
-                              <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" name="password">
-                              </div>
-
-                              <div class="mb-3">
-                                <label class="form-label">Confirmar contraseña</label>
-                                <input type="password" class="form-control" name="password_confirmation">
-                              </div>
-        
-                             
-
-                              <button class="btn btn-success ">Agregar administrador</button>
-        
-                        </form> --}}
-                        
+                       
                         <table class="table table-striped table-bordered table-hover col p-4 ">
                           
                             <thead class="bg-ingo text-white ">
@@ -247,12 +228,12 @@
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->email}}</td>
                                     <td><a  href="" data-bs-toggle="modal" data-bs-target="#modalEditar{{$item->id}}" class="btn btn-warning btn-sm"> <i class="bi bi-pencil-square"></i></a></td>
-                                    <td><a  href="{{route("delete",$item->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
+                                    <td><a  href="{{route("delete_admin",$item->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
 
                                             <!-- Button trigger modal -->
   
   <!-- Modal de modificar datos  -->
-  {{-- <div class="modal fade" id="modalEditar{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalEditar{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -260,29 +241,23 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{route('update')}}" method="POST">
+            <form action="{{route('update_admin')}}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Id</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="txtid" value="{{$item->id}}">
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id" value="{{$item->id}}">
                   </div> 
 
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="txtnombre" value="{{$item->name}}">
+                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$item->name}}">
                 </div> 
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Rol</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" name="txtrol" value="{{$item->rol}}">
-                </div>
+            
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Email</label>
-                    <input type="text" class="form-control p-2" id="exampleInputPassword1" name="txtemail"value="{{$item->email}}">
+                    <input type="email" class="form-control p-2" id="exampleInputPassword1" name="email"value="{{$item->email}}">
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Telefono</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="txttelefono"value="{{$item->telefono}}">
-                </div>
+              
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -293,7 +268,7 @@
         </div>   
       </div>
     </div>
-  </div> --}}
+  </div>
                                     
                                   </tr>
                                  

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->boolean('estado');
-            $table->timestamp('fecha de pedido');
+            $table->string('estado');
+            $table->timestamp('fecha_de_pedido');
+            $table->string('total');
 
             //foranea de tables
 

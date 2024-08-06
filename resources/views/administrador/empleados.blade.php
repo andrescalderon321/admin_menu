@@ -84,7 +84,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{route('pedidos')}}" class="sidebar-link">
+                    <a href="{{route('ordenes')}}" class="sidebar-link">
                         <i class="fi fi-sr-bell-ring"></i>
                         <span>Pedidos</span>
                     </a>
@@ -99,9 +99,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="Base_de_datos.html" class="sidebar-link">
+                    <a href= "{{route('mesas')}}" class="sidebar-link">
                         <i class="fi fi-sr-database"></i>
-                        <span>Base de datos</span>
+                        <span>Mesas</span>
                     </a>
 
                 </li>
@@ -183,7 +183,17 @@
                     </nav>
                     {{-- crud de empleados --}}
 
-                    <h1 class="text-center alert alert-primary">Empleados  </h1>
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                        }
+                    </style>
+
+
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Empleados</h1>
+                    
+                    
 
                     @if(session("correcto"))
                     <div class="alert alert-success">{{session("correcto")}}</div>
@@ -193,12 +203,12 @@
                     <div class="alert alert-danger">{{session("incorrecto")}}</div>
                     @endif
 
-
+{{-- create --}}
                     <div class="row col-12 p-4">
                         
                         <form action="{{route('create')}}" method="POST" class="col-4 p-2 " >
                             @csrf
-                         <div class="alert alert-success">Registro de empleados</div>
+                         <div class="text-center alert alert-primary custom-alert-primary">Registro de empleados</div>
 
         
                             <div class="mb-3">
@@ -297,7 +307,7 @@
                                 </div>
                             </div>
                                     
-                                </tr>
+                            </tr>
                                  
                                 @endforeach
                              

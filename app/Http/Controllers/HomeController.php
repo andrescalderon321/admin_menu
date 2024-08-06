@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Order;
+use App\Models\Table;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -39,11 +42,160 @@ class HomeController extends Controller
     public function supplier(){
         $proveedor=DB::select("SELECT * from suppliers;");
         return view('administrador.provedor')->with("proveedor",$proveedor);
+
     }
 
+    public function tables1(){
+        $mesas=table::all();
+        return view('administrador.mesas',compact('mesas'));//cateroria tabla 
+        }
+
+    public function order(){
+        
+
+        $ordenes=Order::all();
+        $mesas=Table::all();
+        return view('administrador.pedidos',compact('mesas','ordenes'));
+       
+       
+    }
+
+    public function sale(){
+
+        $ventas=DB::select("SELECT * from sales;");
+        return view('administrador.ventas')->with("ventas",$ventas);
+        }
 
 
-    //para crear los registros de empleados
+    
+        public function create_sale(Request $request)
+        {
+        //    el metodo try se utilza como una condicion el cual muestra un mensaje de error al registrar un empleado,si este no es registrado correctamente
+            
+                    try{
+                        $sql=DB::select('insert into sales(monto_total)values(?)',[
+                           
+                            
+                            $request->monto_total,
+                            
+                            
+                         
+                            ]);
+    
+                    }catch(\Throwable $th){
+    
+                        $sql =1;
+    
+                    }
+              
+            if($sql == false){
+                return back()->with("correcto","Empleado fue regitrado exitosamente");
+            }else{
+                return back()->with("incorrecto","Error al registrar");
+            }
+    
+        }
+
+
+        public function update_sale(Request $request){
+
+            // dd($request->all());
+    
+            try{
+                $sql=DB::update("UPDATE sales SET monto_total = ?  WHERE id = ?",[
+                   
+                    $request->monto_total,
+                    $request->id,
+    
+                    ]);
+    
+            }catch(\Throwable $th){
+    
+                $sql =0;
+    
+            }
+      
+            if($sql == true){
+                return back()->with("correcto","Empleado fue mofificado exitosamente");
+            }else{
+                return back()->with("incorrecto","Error al modificar");
+            }
+    
+        }
+
+
+        public function delete_sale($id){
+
+            try{
+                $sql=DB::delete("delete from sales where id=$id");
+                 
+    
+            }catch(\Throwable $th){
+    
+                $sql =0;
+    
+            }
+      
+            if($sql == true){
+            return back()->with("correcto","venta fue eliminado exitosamente");
+                }else{
+            return back()->with("incorrecto","Error al eliminar ");
+                
+                }
+            }
+
+
+       
+
+    public function create_table(Request $request)
+    {
+    //    el metodo try se utilza como una condicion el cual muestra un mensaje de error al registrar un empleado,si este no es registrado correctamente
+        
+                try{
+                    $sql=DB::select('insert into tables(name,ubicacion)values(?,?)',[
+                       
+                        
+                        $request->name,
+                        $request->ubicacion,
+                        
+                     
+                        ]);
+
+                }catch(\Throwable $th){
+
+                    $sql =1;
+
+                }
+          
+        if($sql == false){
+            return back()->with("correcto","Empleado fue regitrado exitosamente");
+        }else{
+            return back()->with("incorrecto","Error al registrar");
+        }
+
+    }
+    
+    public function create_order (Request $request)
+    {
+   
+        $validatedData = $request->validate([
+            'table_id' => 'required|exists:tables,id',
+            'estado' => 'required|string|max:255',
+            'fecha_de_pedido' => 'required|date',
+            'total' => 'required|numeric',
+        ]);
+
+        // Crear el pedido
+        $ordenes = new Order();
+        $ordenes->table_id = $request->table_id;
+        $ordenes->estado = $request->estado;
+        $ordenes->fecha_de_pedido = $request->fecha_de_pedido;
+        $ordenes->total = $request->total;
+        $ordenes->save();
+        return redirect()->back();
+
+    
+    }
 
     public function create(Request $request)
     {
@@ -75,51 +227,7 @@ class HomeController extends Controller
 
     }
 
-    public function update(Request $request){
-
-        try{
-            $sql=DB::update(" update employees set name=?, rol=?, email=?, telefono=? where id=? ",[
-               
-                $request->txtnombre,
-                $request->txtrol,
-                $request->txtemail,
-                $request->txttelefono,
-                $request->txtid
-
-                ]);
-
-        }catch(\Throwable $th){
-
-            $sql =0;
-
-        }
-  
-        if($sql == true){
-            return back()->with("correcto","Empleado fue mofificado exitosamente");
-        }else{
-            return back()->with("incorrecto","Error al modificar");
-        }
-
-    }
-    public function delete($id){
-
-        try{
-            $sql=DB::delete("delete from  employees where id=$id");
-             
-
-        }catch(\Throwable $th){
-
-            $sql =0;
-
-        }
-  
-        if($sql == true){
-        return back()->with("correcto","Empleado fue eliminado exitosamente");
-            }else{
-        return back()->with("incorrecto","Error al eliminar ");
-            
-            }
-        }
+    
     /**
      * Create a new controller instance.
      *
@@ -170,7 +278,6 @@ class HomeController extends Controller
 
     }
 
-    // la funcion empleados me llama los datos de la tabla productos
    
     public function create_menu(Request $request)
     {
@@ -240,16 +347,16 @@ class HomeController extends Controller
     {
     //    el metodo try se utilza como una condicion el cual muestra un mensaje de error al registrar un empleado,si este no es registrado correctamente
         
+    // dd($request->all());
                 try{
-                    $sql=DB::select('insert into suppliers (nombre_producto,cantidad_disponible,descripcion,precio_compra,precio_venta,existencia)values(?,?,?,?,?,?)',[
+                    $sql=DB::select('INSERT into suppliers (nombre_producto,nombre_de_la_empresa,correo,telefono,nombre_del_proveedor)values(?,?,?,?,?)',[
                        
+                        $request->nombre_empresa,
+                        $request->nombre_provedor,
+                        $request->nombre_producto,
+                        $request->correo,
+                        $request->telefono,
                         
-                        $request->producto_nombre,
-                        $request->cantidad,
-                        $request->compra,
-                        $request->venta,
-                        $request->descripcion,
-                        $request->existencia
                      
 
                         ]);
@@ -268,6 +375,96 @@ class HomeController extends Controller
 
     }
 
+    public function update_order(Request $request){
+
+        // dd($request->all());
+
+        try{
+            $sql=DB::update("UPDATE orders SET estado = ?, fecha_de_pedido = ?, total = ? WHERE id = ?",[
+               
+               
+                $request->estado,
+                $request->fecha_de_pedido,
+                $request->total,
+                $request->id,
+
+                ]);
+
+        }catch(\Throwable $th){
+
+            $sql =0;
+
+        }
+  
+        if($sql == true){
+            return back()->with("correcto","Empleado fue mofificado exitosamente");
+        }else{
+            return back()->with("incorrecto","Error al modificar");
+        }
+
+    }
+
+    public function update(Request $request){
+
+        try{
+            $sql=DB::update(" update employees set name=?, rol=?, email=?, telefono=? where id=? ",[
+               
+                $request->txtnombre,
+                $request->txtrol,
+                $request->txtemail,
+                $request->txttelefono,
+                $request->txtid
+
+                ]);
+
+        }catch(\Throwable $th){
+
+            $sql =0;
+
+        }
+  
+        if($sql == true){
+            return back()->with("correcto","Empleado fue mofificado exitosamente");
+        }else{
+            return back()->with("incorrecto","Error al modificar");
+        }
+
+    }
+   
+
+
+
+    public function update_admin(Request $request){
+
+        // dd($request->all());
+
+
+        try{
+            $sql=DB::update("UPDATE users SET name = ?, email = ? WHERE id = ?", [
+               
+               
+                        $request->name,
+                        $request->email,
+                        $request->id
+
+                ]);
+
+        }catch(\Throwable $th){
+
+            $sql =1;
+
+        }
+  
+        if($sql == true){
+            return back()->with("correcto","Producto fue mofificado exitosamente");
+        }else{
+            return back()->with("incorrecto","Error al modificar");
+        }
+
+    }
+
+
+    //aqui empiezan los updates
 
     public function update_menu(Request $request){
 
@@ -360,6 +557,52 @@ class HomeController extends Controller
 
     }
 
+    public function update_table(Request $request){
+
+        try{
+            $sql=DB::update(" update tables set name=?, ubicacion=? where id=? ",[
+               
+                $request->name,
+                $request->ubicacion,
+                $request->id
+
+                ]);
+
+        }catch(\Throwable $th){
+
+            $sql =0;
+
+        }
+  
+        if($sql == true){
+            return back()->with("correcto","Empleado fue mofificado exitosamente");
+        }else{
+            return back()->with("incorrecto","Error al modificar");
+        }
+
+    }
+
+
+    public function delete($id){
+
+        try{
+            $sql=DB::delete("delete from  employees where id=$id");
+             
+
+        }catch(\Throwable $th){
+
+            $sql =0;
+
+        }
+  
+        if($sql == true){
+        return back()->with("correcto","Empleado fue eliminado exitosamente");
+            }else{
+        return back()->with("incorrecto","Error al eliminar ");
+            
+            }
+        }
+
    
     public function delete_menu($id){
 
@@ -421,39 +664,105 @@ class HomeController extends Controller
             }
     }
 
-    public function index()
+    public function delete_order($id){
 
-    {
-        return view('administrador.home');
-    }
+        try{
+            $sql=DB::delete("delete from  orders where id=$id");
+             
 
-    // crud para empleados
+        }catch(\Throwable $th){
+
+            $sql =0;
+
+        }
+  
+        if($sql == true){
+        return back()->with("correcto","Empleado fue eliminado exitosamente");
+            }else{
+        return back()->with("incorrecto","Error al eliminar ");
+            
+            }
+        }
+        public function delete_table($id){
+
+            try{
+                $sql=DB::delete("delete from  tables where id=$id");
+                 
+    
+            }catch(\Throwable $th){
+    
+                $sql =0;
+    
+            }
+      
+            if($sql == true){
+            return back()->with("correcto","Empleado fue eliminado exitosamente");
+                }else{
+            return back()->with("incorrecto","Error al eliminar ");
+                
+                }
+            }
+
+
+            public function delete_admin($id){
+
+                try{
+                    $sql=DB::delete("DELETE from  users where id=$id");
+                     
+        
+                }catch(\Throwable $th){
+        
+                    $sql =0;
+        
+                }
+          
+                if($sql == true){
+                return back()->with("correcto","Empleado fue eliminado exitosamente");
+                    }else{
+                return back()->with("incorrecto","Error al eliminar ");
+                    
+                    }
+              
+              
+                }
+
+                public function index()
+
+                {
+                    return view('administrador.home');
+                }
+            }
+
+
    
-    public function inventories(){
-        return view ('administrador.inventarios');
-    }
-    public function subscriber(){
-        return view ('administrador.suscriptores');
-    }
-    public function food_menu(){
-        return view ('administrador.menu_de_comidas');
-    }
 
-    public function orders(){
-        return view ('administrador.pedidos');
-    }
+//     // crud para empleados
+   
+//     public function inventories(){
+//         return view ('administrador.inventarios');
+//     }
+//     public function subscriber(){
+//         return view ('administrador.suscriptores');
+//     }
+//     public function food_menu(){
+//         return view ('administrador.menu_de_comidas');
+//     }
 
-    public function suppliers(){
-        return view ('administrador.provedor');
-    }
-    public function sale(){
+//     public function orders(){
+//         return view ('administrador.pedidos');
+//     }
 
-        return view ('administrador.ventas');
+//     public function suppliers(){
+//         return view ('administrador.provedor');
+//     }
+//     public function sale(){
 
-    }
+//         return view ('administrador.ventas');
 
-    public function admin(){
+//     }
 
-        return view('administrador.admin');
-    }
-}
+//     public function admin(){
+
+//         return view('administrador.admin');
+//     }
+// 

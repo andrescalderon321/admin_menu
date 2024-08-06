@@ -11,11 +11,13 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -83,7 +85,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{route('pedidos')}}" class="sidebar-link">
+                    <a href="{{route('ordenes')}}" class="sidebar-link">
                         <i class="fi fi-sr-bell-ring"></i>
                         <span>Pedidos</span>
                     </a>
@@ -98,9 +100,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="Base_de_datos.html" class="sidebar-link">
+                    <a href="{{route('mesas')}}" class="sidebar-link">
                         <i class="fi fi-sr-database"></i>
-                        <span>Base de datos</span>
+                        <span>Mesas</span>
                     </a>
 
                 </li>
@@ -180,7 +182,14 @@
                     </nav>
                 {{-- crud de inventarios  --}}
 
-                <h1 class="text-center alert alert-primary">Inventarios</h1>
+                <style>
+                    .custom-alert-primary {
+                        color: white !important;
+                        background-color: #00050a; !important;
+                    }
+                </style>
+
+                <h1 class="text-center alert alert-primary custom-alert-primary">Inventarios</h1>
 
                 @if(session("correcto"))
                 <div class="alert alert-success">{{session("correcto")}}</div>
@@ -195,7 +204,7 @@
                     
                     <form action="{{route('create_inv')}}" method="POST" class="col-3 p-2 " >
                         @csrf
-                     <div class="alert alert-success">Registro de productos </div>
+                     <div class="text-center alert alert-primary custom-alert-primary">Registro de productos </div>
 
     
                         <div class="mb-3">

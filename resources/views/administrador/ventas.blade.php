@@ -83,7 +83,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{route('pedidos')}}"  class="sidebar-link">
+                    <a href="{{route('ordenes')}}"  class="sidebar-link">
                         <i class="fi fi-sr-bell-ring"></i>
                         <span>Pedidos</span>
                     </a>
@@ -98,9 +98,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="Base_de_datos.html" class="sidebar-link">
+                    <a href="{{route('mesas')}}" class="sidebar-link">
                         <i class="fi fi-sr-database"></i>
-                        <span>Base de datos</span>
+                        <span>Mesas</span>
                     </a>
 
                 </li>
@@ -178,9 +178,178 @@
                             </div>
                         </div>
                     </nav>
-                <div class="text-center">
-                    <h1>ventas </h1>
-                </div>
+
+                    {{-- aqui empieza el crud ventas  --}}
+
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                        }
+                    </style>
+    
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Ventas</h1>
+                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
+                    <br><br>
+                        <div class="text-firts">
+
+                            <table
+                            class="table"
+                        >
+                            <thead
+                            class="bg-dark text-white"
+                            >
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Monto total  </th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $i=1;                
+                                @endphp
+                                @foreach ($ventas as $venta)
+                    
+                                <tr>
+                    
+                                    <td scope="row">{{$i++}}</td>
+                                    <td >{{$venta->monto_total}}</td>
+                    
+                                    <td>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit{{$venta->id}}">
+                                        Editar
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{$venta->id}}" >
+                                        Eliminar
+                                    </button>
+                                    {{-- <td><a  href="{{route("delete_table",$mesa->id)}}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a></td>
+                                    </td> --}}
+                                    
+                                    
+                                
+                                </tr>
+                               
+                                {{-- create modal --}}
+
+                                <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar venta</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                
+                                    <form action="{{route('create_sale')}}" method="post">
+                                            @csrf
+                                        <div class="modal-body">
+                                          <div class="mb-3">
+                                            <label for="" class="form-label">Total de venta</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                name="monto_total"
+                                                id=""
+                                                aria-describedby="helpId"
+                                                placeholder=""
+                                            />
+                                          </div>
+                                
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                          <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </form>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {{-- modal edit --}}
+
+                                  <div class="modal fade" id="edit{{$venta->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar datos</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{route('update_sale')}}" method="POST">
+                                                        @csrf
+                                                    <div class="mb-3">
+                                                    <label for="exampleInputEmail1" class="form-label">Id</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id" value="{{$venta->id}}">
+                                                    </div> 
+    
+                                                    <div class="mb-3">
+                                                    <label for="exampleInputEmail1" class="form-label">Total de venta</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="monto_total" value="{{$venta->monto_total}}">
+                                                    </div> 
+                                                   
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Modificar</button>
+                                                    </div>
+                    
+                                                </form>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- modal delete --}}
+
+                                <div class="modal fade" id="delete{{$venta->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Editar venta</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                
+                                    <form action="{{route('delete_sale',$venta->id)}}" method="GET">
+                                            @csrf
+                                    
+                                        <div class="modal-body">
+                                         
+                                            ESTAS SEGURO DE ELIMINAR <strong>{{$venta->monto_total}}?</strong>
+                                
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                          {{-- <button type="submit" class="btn btn-primary">CONFIRMAR</button> --}}
+                                          <a  href="{{route("delete_sale",$venta->id)}}" class="btn btn-danger "> <i class="bi bi-trash">Eliminar</i></a>
+                                        </div>
+                                    </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                
+                                        
+                                           
+                                @endforeach                
+                            
+                            </tbody>
+                        </table>
+        
+                        
+                    </div>
+            </div>
+
+        </div>
+
+      
+        
+
+    </div>
+
+   
+   
+
+    <script type="text/javascript"src="{{asset('js/script.js')}}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
             </div>
 
         </div>

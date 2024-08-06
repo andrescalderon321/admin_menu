@@ -9,8 +9,13 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function table(){
-        return $this->belongsTo('App\Models\Table');
+    protected $table='orders';
+    protected $primarykey='id';
+    protected $fillable=['table_id','estado','fecha_de_pedido','total'];
+    public $timestamps=false;
+
+    public function Mesa(){
+        return $this->hasOne(Table::class,'id','table_id');
     }
 
     public function detail(){

@@ -11,11 +11,14 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -82,7 +85,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{route('pedidos')}}"  class="sidebar-link">
+                    <a href="{{route('ordenes')}}"  class="sidebar-link">
                         <i class="fi fi-sr-bell-ring"></i>
                         <span>Pedidos</span>
                     </a>
@@ -97,9 +100,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="Base_de_datos.html" class="sidebar-link">
+                    <a href="{{route('mesas')}}" class="sidebar-link">
                         <i class="fi fi-sr-database"></i>
-                        <span>Base de datos</span>
+                        <span>Mesas</span>
                     </a>
 
                 </li>
@@ -178,7 +181,19 @@
                         </div>
                     </nav>
                     {{-- crud de provedor --}}
-                    <h1 class="text-center alert alert-primary">Provedores</h1>
+
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                        }
+                    </style>
+        
+        
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Provedores</h1>
+        
+            
+                    
 
                     @if(session("correcto"))
                     <div class="alert alert-success">{{session("correcto")}}</div>
@@ -192,7 +207,7 @@
                         
                         <form action="{{route('create_sup')}}" method="POST" class="col-4 p-2 " >
                             @csrf
-                         <div class="alert alert-success">Registro de proveedores</div>
+                         <div class="text-center alert alert-primary custom-alert-primary">Registro de proveedores</div>
 
         
                             <div class="mb-3">
@@ -202,12 +217,12 @@
 
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Nombre del proveedor</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="nombre_provedor">
+                                <input type="text" class="form-control" id="exampleFormControlInput1" name="nombre_provedor">
                             </div>
         
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Nombre del producto</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="nombre_producto">
+                                <input type="text" class="form-control" id="exampleFormControlInput1"  name="nombre_producto">
                             </div>
                             
                               <div class="mb-3">
@@ -229,11 +244,11 @@
                             <thead class="bg-ingo text-white ">
                               <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Nombre de la empresa</th>
-                                <th scope="col">Nombre de el proveedor</th>
-                                <th scope="col">Nombre de el producto </th>
-                                <th scope="col">Correo</th>
+                                <th scope="col">Nombre del proveedor</th>
                                 <th scope="col">Telefono</th>
+                                <th scope="col">Nombre de la empresa </th>
+                                <th scope="col">Nombre del producto</th>
+                                <th scope="col">Correo</th>
                                 <th></th>
                                
                                 
@@ -272,22 +287,22 @@
 
                                                 <div class="mb-3">
                                                 <label for="exampleInputEmail1" class="form-label">Nombre de la empresa </label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombre" value="{{$item->name}}">
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombre_empresa" value="{{$item->nombre_de_la_empresa}}">
                                                 </div> 
                                                 <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Nombre del provedor</label>
-                                                <input type="text" class="form-control" id="exampleInputPassword1" name="precio" value="{{$item->precio}}">
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="nombre_proveedor" value="{{$item->nombre_del_proveedor}}">
                                                 </div>
                                                 <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Nombre del producto</label>
-                                                <input type="text" class="form-control p-2" id="exampleInputPassword1" name="descripcion"value="{{$item->descripcion}}">
+                                                <input type="text" class="form-control p-2" id="exampleInputPassword1" name="nombre_producto"value="{{$item->nombre_producto}}">
                                                 </div>
                                                 <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Correo</label>
-                                                <input type="text" class="form-control" id="exampleInputPassword1" name="disponibilidad"value="{{$item->disponibilidad}}">
+                                                <input type="email" class="form-control" id="exampleInputPassword1" placeholder="name@example.com"  name="correo"value="{{$item->correo}}">
                                                 </div>
                                                 <label for="exampleInputPassword1" class="form-label">Telefono</label>
-                                                <input type="tel" class="form-control" id="exampleInputPassword1" name="disponibilidad"value="{{$item->disponibilidad}}">
+                                                <input type="tel" class="form-control" id="exampleInputPassword1" name="telefono"value="{{$item->telefono}}">
                                                 </div>
 
                                                 <div class="modal-footer">

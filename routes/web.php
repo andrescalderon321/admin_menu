@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use app\http\Controllers\EmployeeController;
+use App\Http\Controllers\OrdenController;
+use App\Http\Controllers\TableController;
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -17,6 +20,10 @@ Route::get('/home/administrador',[HomeController::class,'admins'])->name('admin'
 Route::get('/home/menu',[HomeController::class,'menu'])->name('menu');
 Route::get('/home/inventarios',[HomeController::class,'inventory'])->name('inventario');
 Route::get('/home/proveedor',[HomeController::class,'supplier'])->name('provedores');
+Route::get('/home/pedidos',[HomeController::class,'order'])->name('ordenes');
+Route::get('/home/mesas',[HomeController::class,'tables1'])->name('mesas');
+Route::get('/home/ventas',[HomeController::class,'sale'])->name('ventas');
+
 
 
 // ruta para crear los registros de employes____
@@ -29,7 +36,9 @@ Route::get('/home/delete-{id}',[HomeController::class,'delete'])->name('delete')
 // ruta para crear los registros de los admins___
 Route::post('/home/create_admin',[HomeController::class,'create_admin'])->name('create_admin');
 // ruta para actualizar los registros de admins
-Route::post('/home/update_admin',[HomeController::class,'update'])->name('update');
+Route::post('/home/update_admin',[HomeController::class,'update_admin'])->name('update_admin');
+// ruta para eliminar id de menu de admins
+Route::get('/home/delete_admin-{id}',[HomeController::class,'delete_admin'])->name('delete_admin');
 
 // ruta para crear los registros de menu de comidas____
 Route::post('/home/create_menu',[HomeController::class,'create_menu'])->name('create_menu');
@@ -52,8 +61,38 @@ Route::post('/home/update_sup',[HomeController::class,'update_sup'])->name('upda
 // ruta para eliminar id de menu de proveedores 
 Route::get('/home/delete_sup-{id}',[HomeController::class,'delete_sup'])->name('delete_sup');
 
+// ruta para crear los mesas ____
+Route::post('/home/create_table',[HomeController::class,'create_table'])->name('create_table');
+// ruta para actualizar las mesas
+Route::post('/home/update_table',[HomeController::class,'update_table'])->name('update_table');
+// ruta para eliminar id de mesas
+Route::get('/home/delete_table-{id}',[HomeController::class,'delete_table'])->name('delete_table');
+
+// ruta para crear los pedidos ____
+Route::post('/home/create_pedidos',[HomeController::class,'create_order'])->name('create_order');
+// ruta para actualizar los pedidos
+Route::post('/home/update_pedidos',[HomeController::class,'update_order'])->name('update_order');
+// ruta para eliminar id de pedidos
+Route::get('/home/delete_pedidos-{id}',[HomeController::class,'delete_order'])->name('delete_order');
+
+// ruta para crear registros de ventas____
+Route::post('/home/create_ventas',[HomeController::class,'create_sale'])->name('create_sale');
+// ruta para actualizar las ventas
+Route::post('/home/update_ventas',[HomeController::class,'update_sale'])->name('update_sale');
+// ruta para eliminar id de ventas
+Route::get('/home/delete_ventas-{id}',[HomeController::class,'delete_sale'])->name('delete_sale');
+
+
+
+
+// Route::resource('mesas', TableController::class );
+// Route::resource('ordenes',OrdenController::class );
+
+
+
 // Route::get('/home/provedores',[HomeController::class,'suppliers'])->name('provedores');
-Route::get('/home/pedidos',[HomeController::class,'orders'])->name('pedidos');
+
+
 Route::get('/home/suscriptores',[HomeController::class,'subscriber'])->name('suscriptores');
 Route::get('/home/ventas',[HomeController::class,'sale'])->name('ventas');
 
