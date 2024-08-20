@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->double('precio_compra');
             $table->double('precio_venta');
-            $table->integer('existencia');
+            $table->string('existencia');
             $table->timestamps();
         });
     }

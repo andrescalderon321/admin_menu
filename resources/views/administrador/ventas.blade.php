@@ -185,12 +185,18 @@
                         .custom-alert-primary {
                             color: white !important;
                             background-color: #00050a; !important;
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
                         }
                     </style>
+
+                    
     
                     <h1 class="text-center alert alert-primary custom-alert-primary">Ventas</h1>
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
                     <br><br>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
+                    <br><br>
+                    
                         <div class="text-firts">
 
                             <table
@@ -201,10 +207,13 @@
                             >
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Monto total  </th>
+                                    <th scope="col">fecha de pedido  </th>
+                                    <th scope="col">total  </th>
+                                    <th scope="col">Numero de venta</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 @php
                                 $i=1;                
@@ -214,7 +223,9 @@
                                 <tr>
                     
                                     <td scope="row">{{$i++}}</td>
-                                    <td >{{$venta->monto_total}}</td>
+                                    <td >{{$venta->Pedido->fecha_de_pedido}}</td>
+                                    <td >{{$venta->Pedido->total}}</td>
+                                    <td >{{$venta->num_venta}}</td>
                     
                                     <td>
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit{{$venta->id}}">
@@ -229,10 +240,9 @@
                                     
                                 
                                 </tr>
-                               
-                                {{-- create modal --}}
+                                 {{-- create modal --}}
 
-                                <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -240,30 +250,53 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                 
-                                    <form action="{{route('create_sale')}}" method="post">
+                                        <form action="{{route('create_sale')}}" method="post">
                                             @csrf
-                                        <div class="modal-body">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                <label for="" class="form-label">Fecha de pedido</label>
+                                                <select name="order_id" id="" class="form-control">
+                                                    @foreach($ordenes as $orden)
+                                                    <option value="{{$orden->id}}">{{$orden->fecha_de_pedido}}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                <label for="" class="form-label">Total</label>
+                                                <select name="total" id="" class="form-control">
+                                                    @foreach($ordenes as $orden)
+                                                    <option value="{{$orden->id}}">{{$orden->total}}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+
                                           <div class="mb-3">
-                                            <label for="" class="form-label">Total de venta</label>
+                                            <label for="" class="form-label">Numero de venta</label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                name="monto_total"
+                                                name="num_venta"
                                                 id=""
                                                 aria-describedby="helpId"
                                                 placeholder=""
                                             />
                                           </div>
                                 
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                          <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-                                    </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+
+                                       
+                                        </form>
                                       </div>
                                     </div>
-                                  </div>
+                                </div>
 
                                   {{-- modal edit --}}
 

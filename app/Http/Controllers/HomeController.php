@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Table;
+use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -52,7 +53,6 @@ class HomeController extends Controller
 
     public function order(){
         
-
         $ordenes=Order::all();
         $mesas=Table::all();
         return view('administrador.pedidos',compact('mesas','ordenes'));
@@ -62,37 +62,32 @@ class HomeController extends Controller
 
     public function sale(){
 
-        $ventas=DB::select("SELECT * from sales;");
-        return view('administrador.ventas')->with("ventas",$ventas);
-        }
+        // $ventas = Sale::with('Pedido')->get();
+        $ventas=Sale::all();
+        $ordenes=Order::all();
 
+        return view('administrador.ventas',compact('ordenes','ventas'));
 
+    }
     
-        public function create_sale(Request $request)
-        {
-        //    el metodo try se utilza como una condicion el cual muestra un mensaje de error al registrar un empleado,si este no es registrado correctamente
-            
-                    try{
-                        $sql=DB::select('insert into sales(monto_total)values(?)',[
-                           
-                            
-                            $request->monto_total,
-                            
-                            
-                         
-                            ]);
+        public function create_sale(Request $request){
     
-                    }catch(\Throwable $th){
+            // dd($request->all());
+
+            $validatedData = $request->validate([
+
+                'order_id' => 'required|exists:tables,id',
+                'num_venta' => 'required|string|max:255',
+                
+                 
+            ]);
     
-                        $sql =1;
-    
-                    }
-              
-            if($sql == false){
-                return back()->with("correcto","Empleado fue regitrado exitosamente");
-            }else{
-                return back()->with("incorrecto","Error al registrar");
-            }
+            // Crear el pedido
+            $ventas = new Sale();
+            $ventas->order_id = $request->order_id;
+            $ventas->num_venta = $request->num_venta;
+            $ventas->save();
+            return redirect()->back();
     
         }
 
@@ -177,6 +172,8 @@ class HomeController extends Controller
     
     public function create_order (Request $request)
     {
+        // dd($request->all());
+
    
         $validatedData = $request->validate([
             'table_id' => 'required|exists:tables,id',
@@ -199,7 +196,10 @@ class HomeController extends Controller
 
     public function create(Request $request)
     {
+        // dd($request->all());
     //    el metodo try se utilza como una condicion el cual muestra un mensaje de error al registrar un empleado,si este no es registrado correctamente
+
+
         
                 try{
                     $sql=DB::select('insert into employees(name,rol,email,telefono)values(?,?,?,?)',[

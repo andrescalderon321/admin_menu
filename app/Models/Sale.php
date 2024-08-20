@@ -9,9 +9,20 @@ class Sale extends Model
 {
     use HasFactory;
 
-    public function detalle_orden (){
+    protected $table='sales';
+    protected $primarykey='id';
+    protected $fillable=['order_id','num_venta'];
+    public $timestamps=false;
 
-        return $this->belongsTo('App\Models\Detail');
-
+    public function Pedido(){
+        return $this->hasOne(Order::class,'id','order_id');
+        // return $this->belongsTo(Order::class,'id','order_id');
+      
     }
 }
+//     public function detalle_orden (){
+
+//         return $this->belongsTo('App\Models\Detail');
+
+//     }
+// }

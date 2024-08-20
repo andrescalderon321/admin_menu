@@ -180,8 +180,20 @@
                         </div>
                     </nav>
                     <br><br>
-
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
+                        }
+                    </style>
+        
+        
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Mesas</h1>
+                    <br><br>
+               
+                    <button type="button" class="btn btn-dark " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
                     <br><br>
                         <div class="text-firts">
 

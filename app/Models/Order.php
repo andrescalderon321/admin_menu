@@ -14,10 +14,13 @@ class Order extends Model
     protected $fillable=['table_id','estado','fecha_de_pedido','total'];
     public $timestamps=false;
 
-    public function Mesa(){
+    
+
+    public function Tabla(){
         return $this->hasOne(Table::class,'id','table_id');
     }
 
+   
     public function detail(){
 
         return $this->belongsTo('App\Models\Detail');

@@ -186,6 +186,8 @@
                         .custom-alert-primary {
                             color: white !important;
                             background-color: #00050a; !important;
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
                         }
                     </style>
         
@@ -205,7 +207,7 @@
 
                     <div class="row col-12 p-4">
                         
-                        <form action="{{route('create_sup')}}" method="POST" class="col-4 p-2 " >
+                        <form action="{{route('create_sup')}}" method="POST" class="col-3 p-2 " >
                             @csrf
                          <div class="text-center alert alert-primary custom-alert-primary">Registro de proveedores</div>
 

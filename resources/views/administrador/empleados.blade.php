@@ -187,7 +187,10 @@
                         .custom-alert-primary {
                             color: white !important;
                             background-color: #00050a; !important;
-                        }
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
+                            /* display: inline-block; /* Hace que el ancho del elemento se ajuste al contenido */
+                        } */
                     </style>
 
 

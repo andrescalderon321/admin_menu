@@ -184,6 +184,8 @@
                         .custom-alert-primary {
                             color: white !important;
                             background-color: #00050a; !important;
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
                         }
                     </style>
 
@@ -192,7 +194,7 @@
                 <div class="text-firts">
                     <br><br>
 
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
+                    <button type="button" class="btn btn-dark " data-bs-toggle="modal" data-bs-target="#create">Nuevo</button>
                     <br><br>
                         <div class="text-firts">
 
@@ -218,9 +220,10 @@
                                 @foreach ($ordenes as $orden)
                     
                                 <tr>
+                                    {{-- el modelo table viene la funcion tabla que es para llamar a name  --}}
                     
                                     <td scope="row">{{$i++}}</td>
-                                    <td >{{$orden->Mesa->name}}</td>
+                                    <td >{{$orden->Tabla->name}}</td>
                                     <td >{{$orden->estado}}</td>
                                     <td >{{$orden->fecha_de_pedido}}</td>
                                     <td >{{$orden->total}}</td>
@@ -236,6 +239,10 @@
                                     <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#accion{{$orden->id}}">
                                         Accion
                                     </button>
+                                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#accion{{$orden->id}}">
+                                        Factura
+                                    </button>
+                                   
                                    
                                 </tr>
                                
@@ -249,18 +256,18 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                 
-                                    <form action="{{route('create_order')}}" method="post">
+                                        <form action="{{route('create_order')}}" method="post">
                                             @csrf
-                                        <div class="modal-body">
-                                          <div class="mb-3">
-                                            <label for="" class="form-label">Nombre de mesa</label>
-                                            <select name="table_id" id="" class="form-control">
-                                                @foreach($mesas as $mesa)
-                                                <option value="{{$mesa->id}}">{{$mesa->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                <label for="" class="form-label">Nombre de mesa</label>
+                                                <select name="table_id" id="" class="form-control">
+                                                    @foreach($mesas as $mesa)
+                                                    <option value="{{$mesa->id}}">{{$mesa->name}}</option>
+                                                    @endforeach
+                                                </select>
 
-                                          </div>
+                                            </div>
                                           <div class="mb-3">
                                             <label for="" class="form-label">Estado</label>
                                             <input
@@ -296,17 +303,17 @@
                                             />
                                           </div>
                                 
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                          <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
 
                                        
-                                    </form>
+                                        </form>
                                       </div>
                                     </div>
-                                  </div>
+                                </div>
 
                                   {{-- modal edit --}}
                                    

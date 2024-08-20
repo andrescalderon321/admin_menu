@@ -177,9 +177,75 @@
                             </div>
                         </div>
                     </nav>
-                <div class="text-center">
-                    <h1>pagina inicio </h1>
-                </div>
+
+                    <style>
+                        .custom-alert-primary {
+                            color: white !important;
+                            background-color: #00050a; !important;
+                            padding: 5px; /* Ajusta el padding a tu preferencia */
+                            margin: 0 auto; /* Ajusta el margin si es necesario */
+                        }
+                    </style>
+
+                  
+
+                    <h1 class="text-center alert alert-primary custom-alert-primary">Inicio</h1>
+
+                    <style>
+                        .custom-container {
+                            display: flex; /* Flexbox para alineación horizontal */
+                            justify-content: space-between; /* Espacio entre las imágenes */
+                            background-color: #f8f9fa;
+                            justify-content: flex-start;
+                            justify-content: center;
+                            gap: 100px;
+                        }
+    
+                    </style>
+                     <style>
+                        /* Estilo CSS adicional */
+                        .custom-style1 {
+                            
+                            padding: 20px;
+                            background-color: #f8f9fa;
+                            width: 20%;
+                            
+                        }
+                    </style>
+
+                    <div class="custom-container">
+
+                        <div class="text-firts custom-style1">
+                        
+                            <img src="{{ asset('img/ventas.png') }}" alt="Descripción de la imagen" class="img-fluid">
+                        </div>
+                      
+                        <div class="text-firts custom-style1">
+                
+                            <img src="{{ asset('img/menu.png') }}" alt="Descripción de la imagen" class="img-fluid">
+                        </div>
+
+                        <div class="text-firts custom-style1">
+    
+                            <img src="{{ asset('img/pedidos.png') }}" alt="Descripción de la imagen" class="img-fluid">
+                        </div>
+                    </div>
+                
+                    <div class="container">
+                        <style>
+                            /* Estilo CSS adicional */
+                            .custom-style {
+                                
+                                padding: 20px;
+                                background-color: #f8f9fa;
+                                width: 100%;
+                            }
+                        </style>
+                        <div class="text-firts custom-style">
+                           {{-- <br><br> --}}
+                            <img src="{{ asset('img/crud_ventas_v3.png') }}" alt="Descripción de la imagen" class="img-fluid">
+                        </div>
+                    </div>
             </div>
 
         </div>

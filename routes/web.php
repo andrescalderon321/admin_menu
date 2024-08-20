@@ -85,6 +85,8 @@ Route::get('/home/delete_ventas-{id}',[HomeController::class,'delete_sale'])->na
 
 
 
+
+
 // Route::resource('mesas', TableController::class );
 // Route::resource('ordenes',OrdenController::class );
 
